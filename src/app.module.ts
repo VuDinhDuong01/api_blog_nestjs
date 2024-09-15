@@ -16,7 +16,8 @@ const defaultOptions = {
   synchronize: true,
 };
 @Module({
-  imports: [UserModule,
+  imports: [  
+    UserModule,
     TypeOrmModule.forRoot(defaultOptions)],
   controllers: [AppController],
   providers: [AppService],
