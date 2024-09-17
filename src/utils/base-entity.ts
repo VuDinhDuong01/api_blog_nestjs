@@ -12,12 +12,12 @@ export class BaseEntity {
     public updatedAt: Date;
 
     @Column({
-        default:'', type:'string'
+        default:''
     })
     createdBy: string 
 
     @Column({
-        default:'', type:'string'
+        default:''
     })
     updatedBy: string 
 }

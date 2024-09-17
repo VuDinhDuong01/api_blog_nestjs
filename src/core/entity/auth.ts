@@ -4,28 +4,28 @@ import { Entity, Column } from "typeorm"
 @Entity()
 export class User extends BaseEntity {
 
-    @Column({ type: 'string', default: '', nullable: false, length: 50 })
+    @Column({  default: '', nullable: false, length: 50 })
     username: string
 
-    @Column({ type: 'string', default: '', nullable: false })
+    @Column({  default: '', nullable: false })
     password: string
 
-    @Column({ type: 'string', default: '', nullable: false, unique: true })
+    @Column({  default: '', nullable: false, unique: true })
     email: string
 
-    @Column({ type: 'string', default: '', nullable: true })
+    @Column({  default: '', nullable: true })
     address: string
 
-    @Column({ type: 'string', default: '', nullable: true })
+    @Column({  default: '', nullable: true })
     avatar: string
 
-    @Column({ type: 'string', default: '', nullable: true })
+    @Column({  default: '', nullable: true })
     phoneNumber: string
 
-    @Column({ type: 'string', default: '', nullable: true })
+    @Column({  default: '', nullable: true })
     token: string
 
-    @Column({ type: 'string', default: '', nullable: true })
+    @Column({  default: '', nullable: true })
     token_expired: string
 
     @Column({ default: 0, type: 'int' })

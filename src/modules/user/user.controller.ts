@@ -16,7 +16,7 @@ export class UserController {
     @ApiBody(userRequestSwagger.register)
     @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    register(@Req() input: Pick<UserDTO, 'email' | 'password' | 'username'>): Promise<> {
+    register(@Req() input: Pick<UserDTO, 'email' | 'password' | 'username'>) {
         return this.registerAdapter.execute(input)
     }
 
@@ -25,7 +25,7 @@ export class UserController {
     @ApiBody(userRequestSwagger.register)
     @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    login(@Req() input: Pick<UserDTO, 'email' | 'password'>): Promise<> {
+    login(@Req() input: Pick<UserDTO, 'email' | 'password'>) {
         return this.loginAdapter.execute(input)
     }
 }

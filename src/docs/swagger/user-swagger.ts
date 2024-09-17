@@ -4,13 +4,13 @@ import { exampleUserRequest, exampleUserResponse } from "../data/user"
 export const userResponsSwagger={
     login:{
         200:()=>swagger.defaultResponse({example:exampleUserResponse.login,status:200}),
-        400:()=>swagger.defaultResponseError({}),
-        500:()=>swagger.defaultResponseError({})
+        // 400:()=>swagger.defaultResponseError({}),
+        // 500:()=>swagger.defaultResponseError({})
     },
     register:{
         200:()=>swagger.defaultResponse({example:exampleUserResponse.login,status:200}),
-        400:()=>swagger.defaultResponseError({}),
-        500:()=>swagger.defaultResponseError({})
+        // 400:()=>swagger.defaultResponseError({}),
+        // 500:()=>swagger.defaultResponseError({})
     }
 }
 
