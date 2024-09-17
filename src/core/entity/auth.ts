@@ -13,19 +13,19 @@ export class User extends BaseEntity {
     @Column({  default: '', nullable: false, unique: true })
     email: string
 
-    @Column({  default: '', nullable: true })
+    @Column({  default: '' })
     address: string
 
-    @Column({  default: '', nullable: true })
+    @Column({  default: '' })
     avatar: string
 
-    @Column({  default: '', nullable: true })
+    @Column({  default: '' })
     phoneNumber: string
 
-    @Column({  default: '', nullable: true })
+    @Column({  default: '' })
     token: string
 
-    @Column({  default: '', nullable: true })
+    @Column({  default: '' })
     token_expired: string
 
     @Column({ default: 0, type: 'int' })

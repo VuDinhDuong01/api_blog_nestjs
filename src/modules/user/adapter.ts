@@ -1,7 +1,7 @@
 import { UserDTO } from "src/Dtos/user.dto";
 
 export abstract class IRegisterAdapter {
-    abstract execute(input:Pick<UserDTO,'email'|'password'|'username'>): Promise<UserDTO>
+    abstract execute(input:Pick<UserDTO,'email'|'password'|'username'>): Promise<Omit<UserDTO,'refresh_token'>>
 }
 
 export abstract class ILoginAdapter{
