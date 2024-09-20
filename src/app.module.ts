@@ -21,7 +21,7 @@ import { UserModule } from './modules/user/user.module';
       password: '123456',
       database: 'blog',
       entities: [User],
-      synchronize: false,
+      synchronize: true,
       logging: true
     }),
     ConfigModule.forRoot({

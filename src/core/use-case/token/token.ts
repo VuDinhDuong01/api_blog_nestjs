@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ITokenAdapter, TokenProps } from "src/libs/token/adapter"
 
 import jwt  from 'jsonwebtoken'

@@ -1,10 +1,11 @@
-import { Body, Controller, Post, Req, Version } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Body, Controller, Post,  Version } from '@nestjs/common';
 import { ILoginAdapter, IRegisterAdapter } from './adapter';
 import { UserDTO } from 'src/Dtos/user.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { userRequestSwagger } from 'src/docs/swagger/user-swagger';
 
-@Controller('auth')
+@Controller('api/auth')
 export class UserController {
     constructor(
         private readonly registerAdapter: IRegisterAdapter,
