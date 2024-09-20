@@ -9,20 +9,21 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { User } from './core/entity/auth';
 import { UserModule } from './modules/user/user.module';
 
-const defaultOptions = {
-  type: 'postgres',
-  host: 'localhost',
-  port: 5433,
-  username: 'postgres',
-  password: '123456',
-  entities: [User],
-  database: 'blog',
-  synchronize: true,
-};
+
 @Module({
   imports: [
     UserModule,
-    TypeOrmModule.forRoot(defaultOptions as any),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '123456',
+      database: 'blog',
+      entities: [User],
+      synchronize: false,
+      logging: true
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env.dev'
