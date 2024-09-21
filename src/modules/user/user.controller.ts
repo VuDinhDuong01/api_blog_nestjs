@@ -17,7 +17,7 @@ export class UserController {
     @ApiBody(userRequestSwagger.register)
     @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    register(@Body() input: Pick<UserDTO, 'email' | 'password' | 'username'>) {
+    register(@Body() input: UserDTO) {
         return this.registerAdapter.execute(input)
     }
 

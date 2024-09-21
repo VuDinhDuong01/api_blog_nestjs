@@ -1,68 +1,83 @@
+/* eslint-disable prettier/prettier */
+import { Optional } from '@nestjs/common';
 import {
     IsInt,
     IsEmail,
     IsString,
     MaxLength,
-    IsDate,
-  } from 'class-validator';
-export class UserDTO{
+} from 'class-validator';
+export class UserDTO {
+
+    @Optional()
     @IsString()
+    id: string =''
 
-    id: string 
     @IsString({
-        message:'user không được bỏ trống',
+        message: 'user không được bỏ trống',
     })
     @MaxLength(255)
-    username: string 
+    username: string
 
     @IsString({
-        message:'email không được bỏ trống'
+        message: 'email không được bỏ trống'
     })
     @MaxLength(255)
-    @IsEmail()
-    email: string 
+    @IsEmail({}, {
+        message: 'email phải đúng định dạng'
+    })
+    email: string
 
     @IsString({
-        message:'password không được bỏ trống'
+        message: 'password không được bỏ trống'
     })
     @MaxLength(255)
     password: string
 
+    @Optional()
     @IsString()
     @MaxLength(255)
-    address: string 
+    address: string = ''
 
+    @Optional()
     @IsString()
-    avatar: string 
+    avatar: string = ''
 
+    @Optional()
     @IsString()
-    phoneNumber: string
+    phoneNumber: string = ''
 
+    @Optional()
     @IsString()
-    token: string
+    token: string = ''
 
+    @Optional()
     @IsString()
-    token_expired: string
+    token_expired: string = ''
 
+    @Optional()
     @IsInt()
-    verify: number
+    verify: number = 0
 
-    @IsString({each: true})
-    role: string[]
+    @Optional()
+    @IsString({ each: true })
+    role: string[] =['USER']
 
-    @IsDate()
-    createdAt:Date
+    @Optional()
+    createdAt: Date
 
-    @IsDate()
-    updatedAt:Date
+    @Optional()
+    updatedAt: Date
 
+    @Optional()
+   
+    createdBy: string
+
+    @Optional()
+  
+    updatedBy: string
+
+    @Optional()
     @IsString()
-    createdBy: string 
-
-    @IsString()
-    updatedBy: string 
-
-    @IsString()
-    refresh_token: string 
+    refresh_token: string =''
 
 }

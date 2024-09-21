@@ -7,13 +7,15 @@ import { LoginUserCase } from 'src/core/use-case/user/login';
 import { Repository } from 'typeorm';
 import { User } from 'src/core/entity/auth';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { MailModule } from 'src/libs/mail/mail.module';
+import { MailService } from 'src/libs/mail/mail.service';
 
 @Module({
-  imports :[TypeOrmModule.forFeature([User])],
+  imports :[TypeOrmModule.forFeature([User]),MailModule],
   providers: [{
     provide: IRegisterAdapter,
-    useFactory: (repository:Repository<User>) => new RegisterUserCase(repository),
-    inject: [getRepositoryToken(User)]
+    useFactory: (repository:Repository<User>,sendMailService:MailService ) => new RegisterUserCase(repository,sendMailService),
+    inject: [getRepositoryToken(User),MailService]
   }, {
     provide: ILoginAdapter,
     useFactory: () => new LoginUserCase(),

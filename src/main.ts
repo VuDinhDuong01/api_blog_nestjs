@@ -2,6 +2,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
+import * as express from 'express';
 // import * as csurf from 'csurf';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 declare const module: any;
@@ -10,7 +11,11 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
   // app.use(csurf());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,            // Bỏ qua các trường không được khai báo trong DTO
+  }));
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
   app.enableVersioning({
     type: VersioningType.URI
   })
