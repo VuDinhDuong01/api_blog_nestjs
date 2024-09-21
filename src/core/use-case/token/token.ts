@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { ITokenAdapter, TokenProps } from "src/libs/token/adapter"
+import { DecodeRes, ITokenAdapter, TokenProps } from "src/libs/token/adapter"
 
 import * as jwt from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode"
@@ -8,7 +8,7 @@ export class TokenUseCase implements ITokenAdapter {
 
     signToken({ token, privateKey, expiresIn }: TokenProps): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            return jwt.sign(token, privateKey, { algorithm: 'HS256', expiresIn }, function (error: any, token: string ) {
+            return jwt.sign(token, privateKey, { algorithm: 'HS256', ...(expiresIn ? {expiresIn: expiresIn} : {}) }, function (error: any, token: string ) {
                 if (error) {
                     reject(error)
                 }
@@ -28,7 +28,7 @@ export class TokenUseCase implements ITokenAdapter {
         })
     }
 
-    decodeToken(token: string): string {
+    decodeToken(token: string): DecodeRes {
         return jwtDecode(token)
     }
 
