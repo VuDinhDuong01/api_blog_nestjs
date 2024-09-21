@@ -10,17 +10,21 @@ import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { MailModule } from 'src/libs/mail/mail.module';
 import { MailService } from 'src/libs/mail/mail.service';
 import { VerifyEmailUseCase } from 'src/core/use-case/user/verify-email';
+import { SecretModule } from 'src/libs/secret/secret.module';
+import { TokenModule } from 'src/libs/token/token.module';
+import { ITokenAdapter } from 'src/libs/token/adapter';
+import { SecretAdapter } from 'src/libs/secret/adapter';
 
 @Module({
-  imports :[TypeOrmModule.forFeature([User]),MailModule],
+  imports :[TypeOrmModule.forFeature([User]),MailModule,SecretModule,TokenModule],
   providers: [{
     provide: IRegisterAdapter,
     useFactory: (repository:Repository<User>,sendMailService:MailService ) => new RegisterUserCase(repository,sendMailService),
     inject: [getRepositoryToken(User),MailService]
   }, {
     provide: ILoginAdapter,
-    useFactory: () => new LoginUserCase(),
-    inject: []
+    useFactory: (repository:Repository<User>, secretService:SecretAdapter, tokenService:ITokenAdapter ) => new LoginUserCase(repository,secretService,tokenService),
+    inject: [getRepositoryToken(User),SecretAdapter,ITokenAdapter]
   },{
     provide:IVerifyEmailAdapter,
     useFactory:(repository: Repository<User>)=> new VerifyEmailUseCase(repository),

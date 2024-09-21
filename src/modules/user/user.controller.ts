@@ -31,12 +31,15 @@ export class UserController {
         return this.IVerifyEmailAdapter.execute(input)
     }
 
-    @Post()
-    @Version('v1')
-    @ApiBody(userRequestSwagger.register)
-    @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
-    @ApiResponse({ status: 403, description: 'Forbidden.' })
-    login(@Body() input: Pick<UserDTO, 'email' | 'password'>) {
+    @Post('login')
+    @Version('1')
+    // @ApiBody(userRequestSwagger.register)
+    // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
+    // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    login(@Body() input: {
+        email: string , 
+        password: string 
+    }) {
         return this.loginAdapter.execute(input)
     }
 }

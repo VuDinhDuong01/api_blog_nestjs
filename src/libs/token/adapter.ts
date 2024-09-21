@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Secret, JwtPayload } from 'jsonwebtoken'
 export interface TokenProps{
     token: JwtPayload

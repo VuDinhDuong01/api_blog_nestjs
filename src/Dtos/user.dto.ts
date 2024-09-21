@@ -49,10 +49,6 @@ export class UserDTO {
     token: string = ''
 
     @Optional()
-    @IsString()
-    token_expired: string = ''
-
-    @Optional()
     @IsInt()
     verify: number = 0
 

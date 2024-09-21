@@ -1,7 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 
-import { RegisterUserCase } from 'src/core/use-case/user/register';
 import { ITokenAdapter } from './adapter';
 import { TokenUseCase } from 'src/core/use-case/token/token';
 
@@ -13,4 +12,4 @@ import { TokenUseCase } from 'src/core/use-case/token/token';
     }],
     exports: [ITokenAdapter]
 })
-export class UserModule { }
+export class TokenModule { }

@@ -22,6 +22,7 @@ import {  ConfigService } from '@nestjs/config';
       }),
       inject: [ConfigService],
     }),
+
   ],
   providers: [MailService],
   exports: [MailService],

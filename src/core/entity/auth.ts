@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { BaseEntity } from "src/utils/base-entity"
 import { Entity, Column } from "typeorm"
 
@@ -25,8 +26,6 @@ export class User extends BaseEntity {
     @Column({  default: '' })
     token: string
 
-    @Column({  default: '' })
-    token_expired: string
 
     @Column({ default: 0, type: 'int' })
     verify: number

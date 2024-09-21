@@ -17,4 +17,7 @@ export abstract class SecretAdapter {
     abstract MAIL_PASSWORD: string;
 
     abstract MAIL_FROM: string;
+
+    abstract EXPIRES_IN_ACCESS_TOKEN  : string 
+    abstract EXPIRES_IN_REFRESH_TOKEN : string 
 }

@@ -9,6 +9,6 @@ import { SecretAdapter } from './adapter';
         provide:SecretAdapter,
         useClass:SecretService
     }],
-    exports: [SecretService]
+    exports: [SecretAdapter]
 })
 export class SecretModule { }

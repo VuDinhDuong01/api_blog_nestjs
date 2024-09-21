@@ -25,4 +25,6 @@ export class SecretService implements SecretAdapter {
     MAIL_PASSWORD = this.config.get<string>("MAIL_PASSWORD")
     
     MAIL_FROM = this.config.get<string>("MAIL_FROM")
+    EXPIRES_IN_ACCESS_TOKEN = this.config.get<string>("EXPIRES_IN_ACCESS_TOKEN")
+   EXPIRES_IN_REFRESH_TOKEN= this.config.get<string>("EXPIRES_IN_REFRESH_TOKEN")
 }
