@@ -23,10 +23,10 @@ export class UserController {
     }
 
     @Post('verify-email')
-    @Version('v1')
-    @ApiBody(userRequestSwagger.register)
-    @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
-    @ApiResponse({ status: 403, description: 'Forbidden.' })
+     @Version('1')
+    // @ApiBody(userRequestSwagger.register)
+    // @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
+    // @ApiResponse({ status: 403, description: 'Forbidden.' })
     verifyEmail(@Body() input:{id: string, token : string }) {
         return this.IVerifyEmailAdapter.execute(input)
     }

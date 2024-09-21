@@ -12,7 +12,7 @@ async function bootstrap() {
   app.enableCors();
   // app.use(csurf());
   app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,            // Bỏ qua các trường không được khai báo trong DTO
+    whitelist: true,      
   }));
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))

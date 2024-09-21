@@ -10,11 +10,11 @@ export abstract class SecretAdapter {
 
     abstract KEY_REFRESH_TOKEN: string;
 
-    abstract MAIL_HOST: string
+    abstract MAIL_HOST: string;
 
-    abstract MAIL_USER: string
+    abstract MAIL_USER: string;
 
-    abstract MAIL_PASSWORD: string
+    abstract MAIL_PASSWORD: string;
 
-    abstract MAIL_FROM: string
+    abstract MAIL_FROM: string;
 }

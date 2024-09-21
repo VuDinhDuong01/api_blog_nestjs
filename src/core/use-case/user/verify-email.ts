@@ -19,14 +19,17 @@ export class VerifyEmailUseCase implements IVerifyEmailAdapter {
             }
         })
         if (!user) throw new NotFoundException('user không tồn tại')
-        const fiveMinutesInMillis = 5 * 60 * 1000;
+        const fiveMinutesInMillis = 1 * 60 * 1000;
         const currentTime = new Date()
-        if (currentTime > (new Date(user.createdAt.getTime() + fiveMinutesInMillis))) {
+        if ((currentTime > (new Date(user.createdAt.getTime() + fiveMinutesInMillis))) ) {
             // xóa user 
             await this.repository.delete(id)
             throw new ForbiddenException("token đã hết hạn")
         }
-        Object.assign(user, { token: '', updatedAt: new Date() })
+        if(token !== user.token){
+            throw new ForbiddenException("token bạn nhập chưa đúng.")
+        }
+        Object.assign(user, { token: '', updatedAt: new Date() , verify:1})
         await this.repository.save(user)
         return {
             message: 'verify token success'
