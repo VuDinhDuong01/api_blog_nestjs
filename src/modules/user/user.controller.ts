@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Post,  Version } from '@nestjs/common';
-import { ILoginAdapter, IRegisterAdapter } from './adapter';
+import { ILoginAdapter, IRegisterAdapter, IVerifyEmailAdapter } from './adapter';
 import { UserDTO } from 'src/Dtos/user.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { userRequestSwagger } from 'src/docs/swagger/user-swagger';
@@ -9,7 +9,8 @@ import { userRequestSwagger } from 'src/docs/swagger/user-swagger';
 export class UserController {
     constructor(
         private readonly registerAdapter: IRegisterAdapter,
-        private readonly loginAdapter: ILoginAdapter
+        private readonly loginAdapter: ILoginAdapter,
+        private readonly IVerifyEmailAdapter: IVerifyEmailAdapter
     ) { }
     @Post('register')
     @ApiTags('user')
@@ -19,6 +20,15 @@ export class UserController {
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     register(@Body() input: UserDTO) {
         return this.registerAdapter.execute(input)
+    }
+
+    @Post('verify-email')
+    @Version('v1')
+    @ApiBody(userRequestSwagger.register)
+    @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
+    verifyEmail(@Body() input:{id: string, token : string }) {
+        return this.IVerifyEmailAdapter.execute(input)
     }
 
     @Post()

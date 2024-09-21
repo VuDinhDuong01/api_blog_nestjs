@@ -9,8 +9,7 @@ import {
 export class UserDTO {
 
     @Optional()
-    @IsString()
-    id: string =''
+    id: string
 
     @IsString({
         message: 'user không được bỏ trống',
@@ -44,10 +43,9 @@ export class UserDTO {
 
     @Optional()
     @IsString()
-    phoneNumber: string = ''
+    phoneNumber: string=''
 
     @Optional()
-    @IsString()
     token: string = ''
 
     @Optional()

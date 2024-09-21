@@ -23,6 +23,12 @@ export class ConflictException extends BaseException {
     }
 }
 
+export class ForbiddenException extends BaseException {
+    constructor(message: string){
+        super(message ?? 'Conflict', 403)
+    }
+}
+
 export class BadRequestException extends BaseException {
     constructor(message: string){
         super(message ?? 'Bad request', 400)

@@ -21,3 +21,7 @@ export abstract class ILogoutAdapter{
 export abstract class IGetMeAdapter{
     abstract execute():Promise<UserDTO>
 }
+
+export abstract class IVerifyEmailAdapter{
+    abstract execute({id, token }:{id: string , token : string }):Promise<{message: string }>
+}

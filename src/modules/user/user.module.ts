@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { ILoginAdapter, IRegisterAdapter } from './adapter';
+import { ILoginAdapter, IRegisterAdapter, IVerifyEmailAdapter } from './adapter';
 import { RegisterUserCase } from 'src/core/use-case/user/register';
 import { LoginUserCase } from 'src/core/use-case/user/login';
 import { Repository } from 'typeorm';
@@ -9,6 +9,7 @@ import { User } from 'src/core/entity/auth';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { MailModule } from 'src/libs/mail/mail.module';
 import { MailService } from 'src/libs/mail/mail.service';
+import { VerifyEmailUseCase } from 'src/core/use-case/user/verify-email';
 
 @Module({
   imports :[TypeOrmModule.forFeature([User]),MailModule],
@@ -20,6 +21,10 @@ import { MailService } from 'src/libs/mail/mail.service';
     provide: ILoginAdapter,
     useFactory: () => new LoginUserCase(),
     inject: []
+  },{
+    provide:IVerifyEmailAdapter,
+    useFactory:(repository: Repository<User>)=> new VerifyEmailUseCase(repository),
+    inject:[getRepositoryToken(User)]
   }],
   controllers: [UserController]
 })
