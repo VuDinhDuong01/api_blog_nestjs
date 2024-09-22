@@ -8,11 +8,13 @@ import { AppService } from './app.service'
 import { ThrottlerModule } from '@nestjs/throttler';
 import { User } from './core/entity/auth';
 import { UserModule } from './modules/user/user.module';
+import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 
 
 @Module({
   imports: [
     UserModule,
+    RefreshTokenModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -32,6 +34,7 @@ import { UserModule } from './modules/user/user.module';
       ttl: 60000,
       limit: 10,
     }]),
+    RefreshTokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

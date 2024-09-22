@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+
 import { SecretAdapter } from "src/libs/secret/adapter";
 import { ITokenAdapter } from "src/libs/token/adapter";
 import { IRefreshTokenAdapter } from "src/modules/user/adapter";

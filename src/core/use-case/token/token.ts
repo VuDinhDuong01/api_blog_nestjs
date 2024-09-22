@@ -21,7 +21,10 @@ export class TokenUseCase implements ITokenAdapter {
         return new Promise<string>((resolve, reject) => {
             return jwt.verify(token, privateKey, function (err:any, decoded: string ) {
                 if (err) {
-                    reject(err)
+                    reject({
+                        status: 401,
+                        message:'token expired'
+                    })
                 }
                 resolve(decoded)
             });

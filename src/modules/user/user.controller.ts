@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Post,  Version } from '@nestjs/common';
-import { IForgotPassAdapter, ILoginAdapter, IRefreshTokenAdapter, IRegisterAdapter, IResetPassAdapter, IVerifyEmailAdapter } from './adapter';
+import { IForgotPassAdapter, ILoginAdapter, IRegisterAdapter, IResetPassAdapter, IVerifyEmailAdapter } from './adapter';
 import { ResetPassDTO, UserDTO } from 'src/Dtos/user.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { userRequestSwagger } from 'src/docs/swagger/user-swagger';
@@ -11,7 +11,7 @@ export class UserController {
         private readonly registerAdapter: IRegisterAdapter,
         private readonly loginAdapter: ILoginAdapter,
         private readonly IVerifyEmailAdapter: IVerifyEmailAdapter,
-        private readonly IRefreshTokenAdapter:IRefreshTokenAdapter,
+        // private readonly IRefreshTokenAdapter:IRefreshTokenAdapter,
         private readonly IForgotPassAdapter:IForgotPassAdapter,
         private readonly IResetPassAdapter:IResetPassAdapter
     ) { }
@@ -46,16 +46,16 @@ export class UserController {
         return this.loginAdapter.execute(input)
     }
 
-    @Post('refresh-token')
-    @Version('1')
-    // @ApiBody(userRequestSwagger.register)
-    // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
-    // @ApiResponse({ status: 403, description: 'Forbidden.' })
-    refreshToken(@Body() input: {
-        token: string , 
-    }) {
-        return this.IRefreshTokenAdapter.execute(input)
-    }
+    // @Post('refresh-token')
+    // @Version('1')
+    // // @ApiBody(userRequestSwagger.register)
+    // // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
+    // // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    // refreshToken(@Body() input: {
+    //     token: string , 
+    // }) {
+    //     return this.IRefreshTokenAdapter.execute(input)
+    // }
 
     @Post('forgot-password')
     @Version('1')

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Module } from '@nestjs/common';
+import {  Module } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { IForgotPassAdapter, ILoginAdapter, IRefreshTokenAdapter, IRegisterAdapter, IResetPassAdapter, IVerifyEmailAdapter } from './adapter';
+import { IForgotPassAdapter, ILoginAdapter, IRegisterAdapter, IResetPassAdapter, IVerifyEmailAdapter } from './adapter';
 import { RegisterUserCase } from 'src/core/use-case/user/register';
 import { LoginUserCase } from 'src/core/use-case/user/login';
 import { Repository } from 'typeorm';
@@ -14,9 +14,7 @@ import { SecretModule } from 'src/libs/secret/secret.module';
 import { TokenModule } from 'src/libs/token/token.module';
 import { ITokenAdapter } from 'src/libs/token/adapter';
 import { SecretAdapter } from 'src/libs/secret/adapter';
-import { RefreshTokenUseCase } from 'src/core/use-case/user/refresh-token';
 import { ForgotPassUseCase, ResetPassUseCase } from 'src/core/use-case/user/reset-password';
-
 @Module({
   imports :[TypeOrmModule.forFeature([User]),MailModule,SecretModule,TokenModule],
   providers: [{
@@ -31,10 +29,6 @@ import { ForgotPassUseCase, ResetPassUseCase } from 'src/core/use-case/user/rese
     provide:IVerifyEmailAdapter,
     useFactory:(repository: Repository<User>)=> new VerifyEmailUseCase(repository),
     inject:[getRepositoryToken(User)]
-  },{
-    provide: IRefreshTokenAdapter,
-    useFactory:(secretService:SecretAdapter,tokenService:ITokenAdapter)=> new RefreshTokenUseCase(secretService,tokenService),
-    inject:[SecretAdapter,ITokenAdapter]
   },
   {
     provide: IForgotPassAdapter,
@@ -49,4 +43,6 @@ import { ForgotPassUseCase, ResetPassUseCase } from 'src/core/use-case/user/rese
 ],
   controllers: [UserController]
 })
-export class UserModule { }
+
+export class UserModule{} 
+
