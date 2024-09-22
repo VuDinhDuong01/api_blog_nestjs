@@ -3,8 +3,8 @@ import { Repository } from "typeorm";
 import { BadRequestException } from "@nestjs/common";
 
 import { User } from "src/core/entity/auth";
-import { IRegisterAdapter } from "src/modules/user/adapter";
-import { UserDTO } from "src/Dtos/user.dto";
+import { IRegisterAdapter } from "src/modules/auth/adapter";
+import { UserDTO } from "src/dtos/user.dto";
 import { MailService } from "src/libs/mail/mail.service";
 import { randomOtp } from "src/utils/random-otp";
 import { comparePassword } from "src/utils/hash-password";
@@ -30,12 +30,12 @@ export class RegisterUserCase implements IRegisterAdapter {
         if (checkEmailExist) {
             throw new BadRequestException('Email đã tồn tại')
         }
-        const otp= randomOtp()
-        await this.sendMail.sendUserConfirmation(input.email,otp,'')
-        const payload={
-            ...input, 
+        const otp = randomOtp()
+        await this.sendMail.sendUserConfirmation(input.email, otp, '')
+        const payload = {
+            ...input,
             password: comparePassword.hash(input.password),
-            token : otp
+            token: otp
         }
         const response = await this.repository.save(payload)
 

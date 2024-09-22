@@ -2,7 +2,7 @@
 
 import { SecretAdapter } from "src/libs/secret/adapter";
 import { ITokenAdapter } from "src/libs/token/adapter";
-import { IRefreshTokenAdapter } from "src/modules/user/adapter";
+import { IRefreshTokenAdapter } from "src/modules/auth/adapter";
 
 
 export class RefreshTokenUseCase implements IRefreshTokenAdapter {

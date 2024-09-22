@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { ResetPassDTO, UserDTO } from "src/Dtos/user.dto";
+import { ResetPassDTO, UserDTO } from "src/dtos/user.dto";
 
 export interface ILoginRes {
     message: string,
@@ -52,7 +52,7 @@ export abstract class IForgotPassAdapter {
 }
 
 export abstract class IResetPassAdapter {
-    abstract execute(input:ResetPassDTO): Promise<{
+    abstract execute(input: ResetPassDTO): Promise<{
         message: string,
         data: any
     }>

@@ -7,8 +7,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service'
 import { ThrottlerModule } from '@nestjs/throttler';
 import { User } from './core/entity/auth';
-import { UserModule } from './modules/user/user.module';
+import { UserModule } from './modules/auth/user.module';
 import { RefreshTokenModule } from './refresh-token/refresh-token.module';
+import { UserModule } from './user/user.module';
 
 
 @Module({
