@@ -6,7 +6,10 @@ export abstract class IGetMeAdapter {
 }
 
 export abstract class IUpdateUserAdapter {
-    abstract execute<T, P,K>(inputBody: T, inputParam: P,inputRequest:K): Promise<Omit<UserDTO, 'refresh_token' | 'verify' | 'password'>>
+    abstract execute<T, P,K>(inputBody: T, inputParam: P,inputRequest:K): Promise<{
+        message:string ,
+        data:Omit<UserDTO, 'refresh_token' | 'verify' | 'password'>
+    }>
 }
 
 export abstract class ILogoutAdapter {

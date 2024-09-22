@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ApiQueryOptions, ApiResponseOptions } from "@nestjs/swagger";
 
 interface ResponseError {
@@ -26,6 +27,13 @@ export const swagger = {
         schema: {
             example: example ? example : undefined
         }
+    }),
+    defaultRequestParam:(swaggerInput:{example: any, name: string , in:string}) => ({
+        schema: {
+            example: swaggerInput.example ? swaggerInput.example : undefined
+        },
+        name:swaggerInput.name,
+        in:swaggerInput.in
     }),
     defaultResponseError: ({ route, status, message, description }: ResponseError) => ({
         description: description,

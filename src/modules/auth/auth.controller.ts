@@ -3,7 +3,7 @@ import { Body, Controller, Post, Version } from '@nestjs/common';
 import { IForgotPassAdapter, ILoginAdapter, IRegisterAdapter, IResetPassAdapter, IVerifyEmailAdapter } from './adapter';
 import { ResetPassDTO, UserDTO } from 'src/dtos/user.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { userRequestSwagger } from 'src/docs/swagger/user-swagger';
+import { userRequestSwagger, userResponseSwagger } from 'src/docs/swagger/user-swagger';
 
 @Controller('api/auth')
 export class AuthController {
@@ -18,7 +18,7 @@ export class AuthController {
     @ApiTags('auth')
     @Version('1')
     @ApiBody(userRequestSwagger.register)
-    @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
+    @ApiResponse(userResponseSwagger.register[200])
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     register(@Body() input: UserDTO) {
         return this.registerAdapter.execute(input)
@@ -26,18 +26,20 @@ export class AuthController {
 
     @Post('verify-email')
     @Version('1')
-    // @ApiBody(userRequestSwagger.register)
-    // @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
-    // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    @ApiTags('auth')
+    @ApiBody(userRequestSwagger.verifyEmail)
+    @ApiResponse(userResponseSwagger.verifyEmail[200])
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     verifyEmail(@Body() input: { id: string, token: string }) {
         return this.IVerifyEmailAdapter.execute(input)
     }
 
     @Post('login')
+    @ApiTags('auth')
     @Version('1')
-    // @ApiBody(userRequestSwagger.register)
-    // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
-    // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    @ApiBody(userRequestSwagger.login)
+    @ApiResponse(userResponseSwagger.login[200])
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     login(@Body() input: {
         email: string,
         password: string
@@ -47,9 +49,10 @@ export class AuthController {
 
     @Post('forgot-password')
     @Version('1')
-    // @ApiBody(userRequestSwagger.register)
-    // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
-    // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    @ApiTags('auth')
+    @ApiBody(userRequestSwagger.register)
+    @ApiResponse(userResponseSwagger.forgotPass[200])
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     forgotPass(@Body() input: {
         email: string,
     }) {
@@ -58,9 +61,10 @@ export class AuthController {
 
     @Post('reset-password')
     @Version('1')
-    // @ApiBody(userRequestSwagger.register)
-    // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
-    // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    @ApiBody(userRequestSwagger.resetPass)
+    @ApiTags('auth')
+    @ApiResponse(userResponseSwagger.resetPass[200])
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     resetPassword(@Body() input: ResetPassDTO) {
         return this.IResetPassAdapter.execute(input)
     }

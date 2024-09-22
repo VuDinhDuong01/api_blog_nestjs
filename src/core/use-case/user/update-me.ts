@@ -6,7 +6,9 @@ import { Repository } from "typeorm";
 
 export class UpdateUserUseCase implements IUpdateUserAdapter {
     constructor(private readonly userModel: Repository<User>) { }
-    async execute(inputBody, inputParam, inputRequest): Promise<Omit<UserDTO, 'refresh_token' | 'verify' | 'password'>> {
+    async execute(inputBody, inputParam, inputRequest): Promise<{
+        message: string , data:Omit<UserDTO, 'refresh_token' | 'verify' | 'password'>
+    }> {
         const user = await this.userModel.findOne({
             where: {
                 id: inputParam.id
@@ -14,6 +16,9 @@ export class UpdateUserUseCase implements IUpdateUserAdapter {
         })
         const payload = Object.assign(user, inputBody, { updateAt: inputRequest.id })
         await this.userModel.save(payload)
-        return payload
+        return {
+            message:'update success',
+            data:payload
+        }
     }
 }
