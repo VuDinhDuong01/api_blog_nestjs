@@ -31,7 +31,7 @@ export class RegisterUserCase implements IRegisterAdapter {
             throw new BadRequestException('Email đã tồn tại')
         }
         const otp= randomOtp()
-        await this.sendMail.sendUserConfirmation(input.email,otp)
+        await this.sendMail.sendUserConfirmation(input.email,otp,'')
         const payload={
             ...input, 
             password: comparePassword.hash(input.password),

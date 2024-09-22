@@ -43,3 +43,11 @@ export abstract class IRefreshTokenAdapter{
         }
     }>
 }
+
+export abstract class IForgotPassAdapter{
+    abstract execute({email }:{email: string}): Promise<{
+        message: string , 
+        data:any
+    }>
+}
+

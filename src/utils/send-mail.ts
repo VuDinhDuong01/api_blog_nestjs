@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 
-export const TEMPLATE_SEND_EMAIL_RESET_PASSWORD = (token: string) => {
+export const TEMPLATE_SEND_EMAIL_RESET_PASSWORD = ({token, link}:{token?:string , link?: string } ) => {
   return `
    <!doctype html>
 <html>
@@ -316,7 +316,7 @@ hr {
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>📬&nbsp; Mã của bạn ở đây. Mã xác thực sẽ hết hạn sau 5 phút</p>
+                        <p>📬&nbsp;${Boolean(token) ? 'Mã của bạn ở đây. Mã xác thực sẽ hết hạn sau 5 phút' : 'Nhấn vào link này để thay đổi mật khẩu của bạn.'}</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -324,7 +324,8 @@ hr {
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a>${token}</a> </td>
+          
+                                      <td > <a href='${link  && link}'>${Boolean(token)?  token :  link}</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>

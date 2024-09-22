@@ -25,7 +25,7 @@ export class ConflictException extends BaseException {
 
 export class ForbiddenException extends BaseException {
     constructor(message: string){
-        super(message ?? 'Conflict', 403)
+        super(message ?? 'Forbidden', 403)
     }
 }
 

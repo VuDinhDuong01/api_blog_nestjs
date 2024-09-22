@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Post,  Version } from '@nestjs/common';
-import { ILoginAdapter, IRefreshTokenAdapter, IRegisterAdapter, IVerifyEmailAdapter } from './adapter';
+import { IForgotPassAdapter, ILoginAdapter, IRefreshTokenAdapter, IRegisterAdapter, IVerifyEmailAdapter } from './adapter';
 import { UserDTO } from 'src/Dtos/user.dto';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { userRequestSwagger } from 'src/docs/swagger/user-swagger';
@@ -11,7 +11,8 @@ export class UserController {
         private readonly registerAdapter: IRegisterAdapter,
         private readonly loginAdapter: ILoginAdapter,
         private readonly IVerifyEmailAdapter: IVerifyEmailAdapter,
-        private readonly IRefreshTokenAdapter:IRefreshTokenAdapter
+        private readonly IRefreshTokenAdapter:IRefreshTokenAdapter,
+        private readonly IForgotPassAdapter:IForgotPassAdapter
     ) { }
     @Post('register')
     @ApiTags('user')
@@ -53,5 +54,16 @@ export class UserController {
         token: string , 
     }) {
         return this.IRefreshTokenAdapter.execute(input)
+    }
+
+    @Post('forgot-password')
+    @Version('1')
+    // @ApiBody(userRequestSwagger.register)
+    // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
+    // @ApiResponse({ status: 403, description: 'Forbidden.' })
+    forgotPass(@Body() input: {
+        email: string , 
+    }) {
+        return this.IForgotPassAdapter.execute(input)
     }
 }

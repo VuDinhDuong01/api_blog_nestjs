@@ -6,13 +6,11 @@ import { TEMPLATE_SEND_EMAIL_RESET_PASSWORD } from 'src/utils/send-mail';
 @Injectable()
 export class MailService {
   constructor(private mailerService: MailerService) {}
-  async sendUserConfirmation(emailTo: string , token: string) {
+  async sendUserConfirmation(emailTo: string , token?:string , link?:string) {
     await this.mailerService.sendMail({
       to: emailTo,
-      // from: '"Support Team" <support@example.com>', // override default from
       subject: 'Welcome to Nice App! Confirm your Email',
-      html:TEMPLATE_SEND_EMAIL_RESET_PASSWORD(token),
-      template: 'verify account', 
+      html:TEMPLATE_SEND_EMAIL_RESET_PASSWORD({token, link})
     });
   }
 }
