@@ -35,7 +35,8 @@ export class RegisterUserCase implements IRegisterAdapter {
         const payload = {
             ...input,
             password: comparePassword.hash(input.password),
-            token: otp
+            token: otp,
+            createdBy:input.email
         }
         const response = await this.repository.save(payload)
 

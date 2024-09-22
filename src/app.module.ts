@@ -7,14 +7,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service'
 import { ThrottlerModule } from '@nestjs/throttler';
 import { User } from './core/entity/auth';
-import { UserModule } from './modules/auth/user.module';
-import { RefreshTokenModule } from './refresh-token/refresh-token.module';
-import { UserModule } from './user/user.module';
+
+import { RefreshTokenModule } from './modules/refresh-token/refresh-token.module';
+import { UserModule } from './modules/user/user.module';
+import { RefreshToken } from './core/entity/refresh-token';
+import { AuthModule } from './modules/auth/auth.module';
+
 
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     RefreshTokenModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -23,7 +27,7 @@ import { UserModule } from './user/user.module';
       username: 'postgres',
       password: '123456',
       database: 'blog',
-      entities: [User],
+      entities: [User, RefreshToken],
       synchronize: true,
       logging: true
     }),
@@ -35,7 +39,6 @@ import { UserModule } from './user/user.module';
       ttl: 60000,
       limit: 10,
     }]),
-    RefreshTokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

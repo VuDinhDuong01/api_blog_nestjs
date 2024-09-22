@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Post, Version } from '@nestjs/common';
-import { IRefreshTokenAdapter } from 'src/modules/auth/adapter';
+import { Body, Controller, Post, Req, Version } from '@nestjs/common';
+import { IRefreshTokenAdapter } from './adapter';
+
 
 @Controller('api/auth')
 export class RefreshTokenController {
@@ -10,9 +11,9 @@ export class RefreshTokenController {
     // @ApiBody(userRequestSwagger.register)
     // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
     // @ApiResponse({ status: 403, description: 'Forbidden.' })
-    refreshToken(@Body() input: {
+    refreshToken(@Body() inputBody: {
         token: string,
-    }) {
-        return this.IRefreshTokenAdapter.execute(input)
+    }, @Req() req: any) {
+        return this.IRefreshTokenAdapter.execute(inputBody,req.decode_token)
     }
 }

@@ -34,16 +34,6 @@ export abstract class IVerifyEmailAdapter {
     abstract execute({ id, token }: { id: string, token: string }): Promise<{ message: string }>
 }
 
-export abstract class IRefreshTokenAdapter {
-    abstract execute({ token }: { token: string }): Promise<{
-        message: string,
-        token: {
-            access_token: string
-            refresh_token: string
-        }
-    }>
-}
-
 export abstract class IForgotPassAdapter {
     abstract execute({ email }: { email: string }): Promise<{
         message: string,

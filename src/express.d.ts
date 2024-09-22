@@ -6,7 +6,8 @@ import { Request } from 'express'
 declare global {
   namespace Express {
     interface Request {
-      user?: any
+      user?: any,
+      decode_token?:any
     }
   }
 }

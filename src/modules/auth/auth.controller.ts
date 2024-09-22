@@ -6,17 +6,16 @@ import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { userRequestSwagger } from 'src/docs/swagger/user-swagger';
 
 @Controller('api/auth')
-export class UserController {
+export class AuthController {
     constructor(
         private readonly registerAdapter: IRegisterAdapter,
         private readonly loginAdapter: ILoginAdapter,
         private readonly IVerifyEmailAdapter: IVerifyEmailAdapter,
-        // private readonly IRefreshTokenAdapter:IRefreshTokenAdapter,
         private readonly IForgotPassAdapter: IForgotPassAdapter,
         private readonly IResetPassAdapter: IResetPassAdapter
     ) { }
     @Post('register')
-    @ApiTags('user')
+    @ApiTags('auth')
     @Version('1')
     @ApiBody(userRequestSwagger.register)
     @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
@@ -45,17 +44,6 @@ export class UserController {
     }) {
         return this.loginAdapter.execute(input)
     }
-
-    // @Post('refresh-token')
-    // @Version('1')
-    // // @ApiBody(userRequestSwagger.register)
-    // // @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
-    // // @ApiResponse({ status: 403, description: 'Forbidden.' })
-    // refreshToken(@Body() input: {
-    //     token: string , 
-    // }) {
-    //     return this.IRefreshTokenAdapter.execute(input)
-    // }
 
     @Post('forgot-password')
     @Version('1')
