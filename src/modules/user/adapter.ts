@@ -15,3 +15,11 @@ export abstract class IUpdateUserAdapter {
 export abstract class ILogoutAdapter {
     abstract execute<T extends { refresh_token: string }>(input: T): Promise<{message: string}>
 }
+
+export  abstract class IDeleteOneUserAdapter{
+    abstract execute<T>(input: T):Promise<{message: string }>
+}
+
+export abstract class IDeleteManyUserAdapter{
+    abstract execute<T>(input:T):Promise<{message: string }>
+}

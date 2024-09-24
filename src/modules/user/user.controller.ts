@@ -1,22 +1,24 @@
 /* eslint-disable prettier/prettier */
-import {  Body, Controller, Get,  Param,  Post,  Put,  Req, Version } from '@nestjs/common';
+import {  Body, Controller, Delete, Get,  Param,  Post,  Put,  Req, Version } from '@nestjs/common';
 
-import { IGetMeAdapter, ILogoutAdapter, IUpdateUserAdapter} from './adapter';
+import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, ILogoutAdapter, IUpdateUserAdapter} from './adapter';
 import { ApiBody, ApiResponse, ApiTags, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { userRequestSwagger, userResponseSwagger } from 'src/docs/swagger/user-swagger';
 
 @Controller('api/auth')
+@ApiBearerAuth()
 export class UserController {
     constructor(
         private readonly IGetMeAdapter:IGetMeAdapter, 
         private readonly ILogoutAdapter:ILogoutAdapter,
-        private readonly IUpdateUserAdapter:IUpdateUserAdapter
+        private readonly IUpdateUserAdapter:IUpdateUserAdapter,
+        private readonly IDeleteOneUserAdapter:IDeleteOneUserAdapter,
+        private readonly IDeleteManyUserAdapter:IDeleteManyUserAdapter
     ){}
 
     @Get('get-me')
     @Version('1')
-    @ApiTags('user')
-    @ApiBearerAuth()
+    @ApiTags('user') 
     @ApiResponse(userResponseSwagger.getMe[200])
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     getMe(@Req() input:any){
@@ -27,7 +29,6 @@ export class UserController {
     @Post('logout')
     @Version('1')
     @ApiTags('user')
-    @ApiBearerAuth()
     @ApiBody(userRequestSwagger.logout)
     @ApiResponse(userResponseSwagger.logout[200])
     @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -38,12 +39,25 @@ export class UserController {
     @Put('update/:id')
     @Version('1')
     @ApiTags('user')
-    @ApiBearerAuth()
     @ApiBody(userRequestSwagger.updateUserBody)
     @ApiParam(userRequestSwagger.updateUserParams)
     @ApiResponse(userResponseSwagger.updateUser[200])
     @ApiResponse({ status: 403, description: 'Forbidden.' })
     updateUser(@Body() inputBody:any,@Param() inputParam: {id: string },@Req() inputRequest:any){
         return this.IUpdateUserAdapter.execute(inputBody,inputParam, inputRequest.user)  
+    }
+
+
+    @Delete(':id')
+    @Version('1')
+    deleteUser(@Param() {id}:{id: string }){
+        return this.IDeleteOneUserAdapter.execute(id)
+    }
+
+
+    @Delete('delete-many-user')
+    @Version('1')
+    deleteManyUser(@Body() {body}:{body: string[]}){
+        return this.IDeleteManyUserAdapter.execute(body)
     }
 }
