@@ -48,13 +48,18 @@ export class UserController {
     }
 
 
-    @Delete(':id')
+    @Delete('delete-user/:id')
     @Version('1')
+    @ApiTags('user')
+    @ApiParam(userRequestSwagger.updateUserParams)
+    @ApiResponse(userResponseSwagger.deleteUser[200])
     deleteUser(@Param() {id}:{id: string }){
         return this.IDeleteOneUserAdapter.execute(id)
     }
 
-
+    @ApiBody(userRequestSwagger.deleteManyUser)
+    @ApiResponse(userResponseSwagger.deleteUser[200])
+    @ApiTags('user')
     @Delete('delete-many-user')
     @Version('1')
     deleteManyUser(@Body() {body}:{body: string[]}){

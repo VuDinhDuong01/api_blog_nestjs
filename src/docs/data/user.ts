@@ -25,7 +25,8 @@ export const exampleUserRequest = {
     resetPass:Object.assign(pick(EXAMPLE_DEFAULT_OPTION_REQUEST_AUTH,['email']),EXAMPLE_PASS),
     refreshToken:REFRESH_TOKEN,
     logout:REFRESH_TOKEN,
-    updateUserBody:EXAMPLE_DEFAULT_OPTION_REQUEST_AUTH
+    updateUserBody:EXAMPLE_DEFAULT_OPTION_REQUEST_AUTH,
+    deleteManyUser:['73908ee9-c29a-4a3b-918c-5457a7faa2f1','73908ee9-c29a-4a3b-918c-5457a7faa2f1']
 }
 
 export const exampleUserResponse = {
@@ -118,6 +119,9 @@ export const exampleUserResponse = {
                 "USER"
             ]
         },
+    },
+    deleteUser:{
+        message:'delete user success'
     }
 }
 

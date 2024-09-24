@@ -33,6 +33,9 @@ export const userResponseSwagger={
     },
     updateUser:{
         200: swagger.defaultResponse({example: exampleUserResponse.updateUser,status:200})
+    },
+    deleteUser:{
+        200: swagger.defaultResponse({example: exampleUserResponse.deleteUser, status:200})
     }
 }
 
@@ -45,5 +48,6 @@ export const userRequestSwagger= {
     refreshToken: swagger.defaultRequestBody({example: exampleUserRequest.refreshToken, description:'body refresh token'}),
     logout: swagger.defaultRequestBody({example: exampleUserRequest.refreshToken, description:'body refresh token'}),
     updateUserBody: swagger.defaultRequestBody({example: exampleUserRequest.updateUserBody}),
-    updateUserParams: swagger.defaultRequestParam({example:{id:'73908ee9-c29a-4a3b-918c-5457a7faa2f1'}, name:'id',in:'path'})
+    updateUserParams: swagger.defaultRequestParam({example:{id:'73908ee9-c29a-4a3b-918c-5457a7faa2f1'}, name:'id',in:'path'}),
+    deleteManyUser: swagger.defaultRequestBody({example: exampleUserRequest.deleteManyUser, description:'body delete many user'})
 }
