@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BeforeUpdate } from "typeorm"
 
 @Entity()
 export class BaseEntity {
@@ -8,17 +8,22 @@ export class BaseEntity {
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     public createdAt: Date;
-    
-    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
-    public updatedAt: Date;
+
+    @Column({ type: 'timestamp', nullable: true })
+    public updatedAt: Date | null; 
+
+    @BeforeUpdate()
+    updateTimestamp() {
+        this.updatedAt = new Date(); 
+    }
 
     @Column({
-        default:''
+        default: ''
     })
-    createdBy: string 
+    createdBy: string
 
     @Column({
-        default:''
+        default: ''
     })
-    updatedBy: string 
+    updatedBy: string
 }

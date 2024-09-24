@@ -14,7 +14,7 @@ export class UpdateUserUseCase implements IUpdateUserAdapter {
                 id: inputParam.id
             }
         })
-        const payload = Object.assign(user, inputBody, { updateAt: inputRequest.id })
+        const payload = Object.assign(user, inputBody, { updatedBy: inputRequest.id })
         await this.userModel.save(payload)
         return {
             message:'update success',
