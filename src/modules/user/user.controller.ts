@@ -1,12 +1,15 @@
 /* eslint-disable prettier/prettier */
-import {  Body, Controller, Delete, Get,  Param,  Post,  Put,  Req, Version } from '@nestjs/common';
+import {  Body, Controller, Delete, Get,  Param,  Post,  Put,  Req, UseGuards, Version } from '@nestjs/common';
 
 import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, ILogoutAdapter, IUpdateUserAdapter} from './adapter';
 import { ApiBody, ApiResponse, ApiTags, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { userRequestSwagger, userResponseSwagger } from 'src/docs/swagger/user-swagger';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorator/roles.decorator';
 
 @Controller('api/auth')
 @ApiBearerAuth()
+
 export class UserController {
     constructor(
         private readonly IGetMeAdapter:IGetMeAdapter, 
@@ -47,22 +50,26 @@ export class UserController {
         return this.IUpdateUserAdapter.execute(inputBody,inputParam, inputRequest.user)  
     }
 
-
+    @UseGuards(RolesGuard)
+    @Roles('ADMIN')
     @Delete('delete-user/:id')
     @Version('1')
     @ApiTags('user')
     @ApiParam(userRequestSwagger.updateUserParams)
     @ApiResponse(userResponseSwagger.deleteUser[200])
+    
     deleteUser(@Param() {id}:{id: string }){
         return this.IDeleteOneUserAdapter.execute(id)
     }
 
+    @UseGuards(RolesGuard)
+    @Roles('ADMIN')
     @ApiBody(userRequestSwagger.deleteManyUser)
     @ApiResponse(userResponseSwagger.deleteUser[200])
     @ApiTags('user')
     @Delete('delete-many-user')
     @Version('1')
-    deleteManyUser(@Body() {body}:{body: string[]}){
-        return this.IDeleteManyUserAdapter.execute(body)
+    deleteManyUser(@Body() {body}){
+        return this.IDeleteManyUserAdapter.execute(body.ids)
     }
 }

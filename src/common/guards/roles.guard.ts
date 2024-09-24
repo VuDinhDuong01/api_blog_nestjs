@@ -1,23 +1,28 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Roles } from '../decorator/roles.decorator';
+import { ForbiddenException } from 'src/utils/base-exception';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get(Roles, context.getHandler());
-    if (!roles) {
-      return true;
-    }
-    const request = context.switchToHttp().getRequest();
-    const user = request.user;
-    return matchRoles(roles, user.roles);
-  }
-}
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
-function matchRoles(roles: string[], roles1: any): boolean {
-    throw new Error('Function not implemented.');
+    if (!roles) {
+      return true; // Nếu không có metadata roles, không cần kiểm tra vai trò
+    }
+
+    const request = context.switchToHttp().getRequest();
+    const user = request.user
+    if(user && user.role && !this.matchRoles(user.role, roles)) throw new ForbiddenException('you have not permission')
+    return  user && user.role && this.matchRoles(user.role, roles)
+  }
+
+  matchRoles(listRole: string[], userRole: string[]) {
+    return listRole.some(item => userRole.includes(item))
+  }
+
+
 }
