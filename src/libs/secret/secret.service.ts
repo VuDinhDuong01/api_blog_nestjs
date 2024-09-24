@@ -7,7 +7,7 @@ import { SecretAdapter } from './adapter';
 @Injectable()
 export class SecretService implements SecretAdapter {
     constructor(private readonly config: ConfigService) { }
- 
+
     PORT = this.config.get<string>('PORT')
 
     PASSWORD_POSTGRES = this.config.get<string>('PASSWORD_POSTGRES')
@@ -23,8 +23,22 @@ export class SecretService implements SecretAdapter {
     MAIL_USER = this.config.get<string>("MAIL_USER")
 
     MAIL_PASSWORD = this.config.get<string>("MAIL_PASSWORD")
-    
+
     MAIL_FROM = this.config.get<string>("MAIL_FROM")
+    
     EXPIRES_IN_ACCESS_TOKEN = this.config.get<string>("EXPIRES_IN_ACCESS_TOKEN")
-   EXPIRES_IN_REFRESH_TOKEN= this.config.get<string>("EXPIRES_IN_REFRESH_TOKEN")
+
+    EXPIRES_IN_REFRESH_TOKEN = this.config.get<string>("EXPIRES_IN_REFRESH_TOKEN")
+
+    MINIO_ENDPOINT = this.config.get<string>('MINIO_ENDPOINT')
+
+    MINIO_PORT = this.config.get<string>('MINIO_ENDPOINT')
+
+    MINIO_ACCESS_KEY = this.config.get<string>('MINIO_ACCESS_KEY')
+
+    MINIO_SECRET_KEY = this.config.get<string>('MINIO_SECRET_KEY')
+
+    MINIO_USE_SSL = this.config.get<string>('MINIO_USE_SSL')
+
+    MINIO_BUCKET_NAME = this.config.get<string>('MINIO_BUCKET_NAME')
 }
