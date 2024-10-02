@@ -16,6 +16,10 @@ async function bootstrap() {
     whitelist: true,
   }));
   app.use(express.json())
+  // app.use(fileUpload({
+  //   createParentPath: true
+  // }))
+
   app.use(express.urlencoded({ extended: true }))
   app.enableVersioning({
     type: VersioningType.URI

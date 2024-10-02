@@ -23,3 +23,7 @@ export  abstract class IDeleteOneUserAdapter{
 export abstract class IDeleteManyUserAdapter{
     abstract execute<T>(input:T):Promise<{message: string }>
 }
+
+export abstract class IImportUserAdapter{
+    abstract execute<T>(input:T):Promise<any>
+}

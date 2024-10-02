@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
-import {  Body, Controller, Delete, Get,  Param,  Post,  Put,  Req, UseGuards, Version } from '@nestjs/common';
+import {  Body, Controller, Delete, Get,  Param,  Post,  Put,  Req, UploadedFile, UseGuards, UseInterceptors, Version } from '@nestjs/common';
 
-import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, ILogoutAdapter, IUpdateUserAdapter} from './adapter';
+import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, IImportUserAdapter, ILogoutAdapter, IUpdateUserAdapter} from './adapter';
 import { ApiBody, ApiResponse, ApiTags, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { userRequestSwagger, userResponseSwagger } from 'src/docs/swagger/user-swagger';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorator/roles.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/auth')
 @ApiBearerAuth()
@@ -16,7 +17,8 @@ export class UserController {
         private readonly ILogoutAdapter:ILogoutAdapter,
         private readonly IUpdateUserAdapter:IUpdateUserAdapter,
         private readonly IDeleteOneUserAdapter:IDeleteOneUserAdapter,
-        private readonly IDeleteManyUserAdapter:IDeleteManyUserAdapter
+        private readonly IDeleteManyUserAdapter:IDeleteManyUserAdapter,
+        private readonly IImportUserAdapter: IImportUserAdapter
     ){}
 
     @Get('get-me')
@@ -71,5 +73,18 @@ export class UserController {
     @Version('1')
     deleteManyUser(@Body() {body}){
         return this.IDeleteManyUserAdapter.execute(body.ids)
+    }
+
+
+    @UseGuards(RolesGuard)
+    @Roles('ADMIN')
+    @ApiBody(userRequestSwagger.deleteManyUser)
+    @ApiResponse(userResponseSwagger.deleteUser[200])
+    @ApiTags('user')
+    @Post('import-user')
+    @Version('1')
+    @UseInterceptors(FileInterceptor('file'))
+    importUser(@UploadedFile() file: Express.Multer.File){
+        return this.IImportUserAdapter.execute(file)
     }
 }

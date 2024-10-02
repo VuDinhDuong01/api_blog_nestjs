@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, ILogoutAdapter, IUpdateUserAdapter } from './adapter';
+import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, IImportUserAdapter, ILogoutAdapter, IUpdateUserAdapter } from './adapter';
 import { GetMeUseCase } from 'src/core/use-case/user/get-me';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/core/entity/auth';
@@ -15,6 +15,7 @@ import { LogoutUseCase } from 'src/core/use-case/user/logout';
 import { UpdateUserUseCase } from 'src/core/use-case/user/update-me';
 import { RefreshToken } from 'src/core/entity/refresh-token';
 import { DeleteUserUseCase } from 'src/core/use-case/user/delete-user';
+import { ImportUserCase } from 'src/core/use-case/user/import-user';
 
 @Module({
   imports:[TypeOrmModule.forFeature([User,RefreshToken])],
@@ -43,6 +44,11 @@ import { DeleteUserUseCase } from 'src/core/use-case/user/delete-user';
       useFactory: (userModel: Repository<User>)=> new DeleteUserUseCase(userModel),
       inject:[getRepositoryToken(User)]
 
+    },
+    {
+      provide:IImportUserAdapter,
+      useFactory:(userModel:Repository<User>)=> new ImportUserCase(userModel),
+      inject:[getRepositoryToken(User)]
     },
     {
       provide: ITokenAdapter,
