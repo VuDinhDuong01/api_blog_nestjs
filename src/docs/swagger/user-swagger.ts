@@ -36,6 +36,9 @@ export const userResponseSwagger={
     },
     deleteUser:{
         200: swagger.defaultResponse({example: exampleUserResponse.deleteUser, status:200})
+    },
+    importUser:{
+        200: swagger.defaultResponse({example:exampleUserResponse.importUser,status:200})
     }
 }
 
@@ -49,5 +52,6 @@ export const userRequestSwagger= {
     logout: swagger.defaultRequestBody({example: exampleUserRequest.refreshToken, description:'body refresh token'}),
     updateUserBody: swagger.defaultRequestBody({example: exampleUserRequest.updateUserBody}),
     updateUserParams: swagger.defaultRequestParam({example:{id:'73908ee9-c29a-4a3b-918c-5457a7faa2f1'}, name:'id',in:'path'}),
-    deleteManyUser: swagger.defaultRequestBody({example: exampleUserRequest.deleteManyUser, description:'body delete many user'})
+    deleteManyUser: swagger.defaultRequestBody({example: exampleUserRequest.deleteManyUser, description:'body delete many user'}),
+    importUser: swagger.defaultRequestBody({example:exampleUserRequest.importUser,description:'body import user'})
 }

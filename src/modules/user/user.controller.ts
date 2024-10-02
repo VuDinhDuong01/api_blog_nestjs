@@ -78,8 +78,8 @@ export class UserController {
 
     @UseGuards(RolesGuard)
     @Roles('ADMIN')
-    @ApiBody(userRequestSwagger.deleteManyUser)
-    @ApiResponse(userResponseSwagger.deleteUser[200])
+    @ApiBody(userRequestSwagger.importUser)
+    @ApiResponse(userResponseSwagger.importUser[200])
     @ApiTags('user')
     @Post('import-user')
     @Version('1')

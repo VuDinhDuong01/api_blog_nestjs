@@ -26,7 +26,10 @@ export const exampleUserRequest = {
     refreshToken:REFRESH_TOKEN,
     logout:REFRESH_TOKEN,
     updateUserBody:EXAMPLE_DEFAULT_OPTION_REQUEST_AUTH,
-    deleteManyUser:['73908ee9-c29a-4a3b-918c-5457a7faa2f1','73908ee9-c29a-4a3b-918c-5457a7faa2f1']
+    deleteManyUser:['73908ee9-c29a-4a3b-918c-5457a7faa2f1','73908ee9-c29a-4a3b-918c-5457a7faa2f1'],
+    importUser:{
+        file:'string'
+    }
 }
 
 export const exampleUserResponse = {
@@ -122,6 +125,28 @@ export const exampleUserResponse = {
     },
     deleteUser:{
         message:'delete user success'
+    },
+    importUser:{
+        message: "import user success",
+        data: {
+            successful: [
+                {
+                    username: "Vũ Đình Dương",
+                    email: "duong3lophot@gmail.com",
+                    password: "Password1234!2"
+                }
+            ],
+            failed: [
+                {
+                    password: "Password1234!2",
+                    errorField: [
+                        "Email không được bỏ trống",
+                        "Email đã tồn tại.",
+                        "username không được bỏ trống"
+                    ]
+                }
+            ]
+        }
     }
 }
 
