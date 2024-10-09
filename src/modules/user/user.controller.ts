@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import {  Body, Controller, Delete, Get,  Param,  Post,  Put,  Req, UploadedFile, UseGuards, UseInterceptors, Version } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UploadedFile, UseGuards, UseInterceptors, Version } from '@nestjs/common';
 
-import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, IImportUserAdapter, ILogoutAdapter, IUpdateUserAdapter} from './adapter';
+import { IDeleteManyUserAdapter, IDeleteOneUserAdapter, IGetMeAdapter, IImportUserAdapter, ILogoutAdapter, IUpdateUserAdapter } from './adapter';
 import { ApiBody, ApiResponse, ApiTags, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { userRequestSwagger, userResponseSwagger } from 'src/docs/swagger/user-swagger';
 import { RolesGuard } from 'src/common/guards/roles.guard';
@@ -13,20 +13,20 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 export class UserController {
     constructor(
-        private readonly IGetMeAdapter:IGetMeAdapter, 
-        private readonly ILogoutAdapter:ILogoutAdapter,
-        private readonly IUpdateUserAdapter:IUpdateUserAdapter,
-        private readonly IDeleteOneUserAdapter:IDeleteOneUserAdapter,
-        private readonly IDeleteManyUserAdapter:IDeleteManyUserAdapter,
+        private readonly IGetMeAdapter: IGetMeAdapter,
+        private readonly ILogoutAdapter: ILogoutAdapter,
+        private readonly IUpdateUserAdapter: IUpdateUserAdapter,
+        private readonly IDeleteOneUserAdapter: IDeleteOneUserAdapter,
+        private readonly IDeleteManyUserAdapter: IDeleteManyUserAdapter,
         private readonly IImportUserAdapter: IImportUserAdapter
-    ){}
+    ) { }
 
     @Get('get-me')
     @Version('1')
-    @ApiTags('user') 
+    @ApiTags('user')
     @ApiResponse(userResponseSwagger.getMe[200])
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    getMe(@Req() input:any){
+    getMe(@Req() input: any) {
         return this.IGetMeAdapter.execute(input.user)
     }
 
@@ -37,8 +37,8 @@ export class UserController {
     @ApiBody(userRequestSwagger.logout)
     @ApiResponse(userResponseSwagger.logout[200])
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    logout(@Body() input:{refresh_token: string }){
-        return this.ILogoutAdapter.execute(input)  
+    logout(@Body() input: { refresh_token: string }) {
+        return this.ILogoutAdapter.execute(input)
     }
 
     @Put('update/:id')
@@ -48,8 +48,8 @@ export class UserController {
     @ApiParam(userRequestSwagger.updateUserParams)
     @ApiResponse(userResponseSwagger.updateUser[200])
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    updateUser(@Body() inputBody:any,@Param() inputParam: {id: string },@Req() inputRequest:any){
-        return this.IUpdateUserAdapter.execute(inputBody,inputParam, inputRequest.user)  
+    updateUser(@Body() inputBody: any, @Param() inputParam: { id: string }, @Req() inputRequest: any) {
+        return this.IUpdateUserAdapter.execute(inputBody, inputParam, inputRequest.user)
     }
 
     @UseGuards(RolesGuard)
@@ -59,8 +59,8 @@ export class UserController {
     @ApiTags('user')
     @ApiParam(userRequestSwagger.updateUserParams)
     @ApiResponse(userResponseSwagger.deleteUser[200])
-    
-    deleteUser(@Param() {id}:{id: string }){
+
+    deleteUser(@Param() { id }: { id: string }) {
         return this.IDeleteOneUserAdapter.execute(id)
     }
 
@@ -71,11 +71,10 @@ export class UserController {
     @ApiTags('user')
     @Delete('delete-many-user')
     @Version('1')
-    deleteManyUser(@Body() {body}){
+    deleteManyUser(@Body() { body }) {
         return this.IDeleteManyUserAdapter.execute(body.ids)
     }
-
-
+    
     @UseGuards(RolesGuard)
     @Roles('ADMIN')
     @ApiBody(userRequestSwagger.importUser)
@@ -84,7 +83,7 @@ export class UserController {
     @Post('import-user')
     @Version('1')
     @UseInterceptors(FileInterceptor('file'))
-    importUser(@UploadedFile() file: Express.Multer.File){
+    importUser(@UploadedFile() file: Express.Multer.File) {
         return this.IImportUserAdapter.execute(file)
     }
 }

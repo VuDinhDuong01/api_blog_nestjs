@@ -10,7 +10,7 @@ import { UNAUTHORIZEDException } from '../../utils/base-exception';
 export class VerifyAccessTokenMiddleware implements NestMiddleware {
   constructor(private readonly tokenService: ITokenAdapter, private readonly SecretService: SecretAdapter) { }
   async use(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
       throw new UNAUTHORIZEDException('No token provided')
     }
