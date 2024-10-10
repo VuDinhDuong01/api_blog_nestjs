@@ -7,18 +7,16 @@ import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/core/entity/auth';
 import { Repository } from 'typeorm';
 import { VerifyAccessTokenMiddleware } from 'src/common/middlewares/verify-access-token.middleware';
-import { ITokenAdapter } from 'src/libs/token/adapter';
-import { SecretAdapter } from 'src/libs/secret/adapter';
-import { TokenUseCase } from 'src/core/use-case/token/token';
-import { SecretService } from 'src/libs/secret/secret.service';
 import { LogoutUseCase } from 'src/core/use-case/user/logout';
 import { UpdateUserUseCase } from 'src/core/use-case/user/update-me';
 import { RefreshToken } from 'src/core/entity/refresh-token';
 import { DeleteUserUseCase } from 'src/core/use-case/user/delete-user';
 import { ImportUserCase } from 'src/core/use-case/user/import-user';
+import { SecretModule } from 'src/libs/secret/secret.module';
+import { TokenModule } from 'src/libs/token/token.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([User,RefreshToken])],
+  imports:[TypeOrmModule.forFeature([User,RefreshToken]),  SecretModule,TokenModule],
   providers:[
     {
       provide:IGetMeAdapter,
@@ -50,15 +48,6 @@ import { ImportUserCase } from 'src/core/use-case/user/import-user';
       useFactory:(userModel:Repository<User>)=> new ImportUserCase(userModel),
       inject:[getRepositoryToken(User)]
     },
-    {
-      provide: ITokenAdapter,
-      useClass: TokenUseCase 
-    },
-    {
-      provide: SecretAdapter,    
-      useClass: SecretService
-    }
-
   ],
   controllers: [UserController]
 })
