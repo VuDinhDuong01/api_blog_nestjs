@@ -14,3 +14,11 @@ export abstract class UpdateMenuAdapter {
 export abstract class DeleteMenuAdapter {
     abstract execute(input: string): Promise<{message: string }>
 }
+
+export  abstract class GetAllMenuAdapter {
+    abstract  execute(input : any):Promise<any>
+}
+
+export abstract class GetMenuAdapter{
+    abstract execute(input: string ):Promise<any>
+}
