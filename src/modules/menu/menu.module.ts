@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MenuController } from './menu.controller';
-import { CreateMenuAdapter, DeleteMenuAdapter, GetAllMenuAdapter, UpdateMenuAdapter } from './adapter';
+import { CreateMenuAdapter, DeleteMenuAdapter, GetAllMenuAdapter, GetMenuAdapter, UpdateMenuAdapter } from './adapter';
 import { CreateMenuUseCase } from 'src/core/use-case/menu/create';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { Menu } from 'src/core/entity/menu';
@@ -12,6 +12,7 @@ import { DeleteMenuUseCase } from 'src/core/use-case/menu/delete';
 import { SecretModule } from 'src/libs/secret/secret.module';
 import { TokenModule } from 'src/libs/token/token.module';
 import { GetAllMenuUseCase } from 'src/core/use-case/menu/get-all';
+import { GetMenuUseCase } from 'src/core/use-case/menu/get';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Menu]), SecretModule,TokenModule],
@@ -33,6 +34,10 @@ import { GetAllMenuUseCase } from 'src/core/use-case/menu/get-all';
     },{
       provide: GetAllMenuAdapter,
       useFactory:(modelMenu:Repository<Menu>)=> new GetAllMenuUseCase(modelMenu),
+      inject:[getRepositoryToken(Menu)]
+    },{
+      provide:GetMenuAdapter,
+      useFactory:(modelMenu: Repository<Menu>)=> new GetMenuUseCase(modelMenu),
       inject:[getRepositoryToken(Menu)]
     }
   ]

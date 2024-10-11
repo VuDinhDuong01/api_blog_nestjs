@@ -7,9 +7,8 @@ import { TokenUseCase } from 'src/core/use-case/token/token';
 @Module({
     providers: [{
         provide: ITokenAdapter,
-        useFactory: () => new TokenUseCase(),
-        inject: []
+        useClass:TokenUseCase,
     }],
     exports: [ITokenAdapter]
 })
-export class TokenModule { }
+export class TokenModule {}

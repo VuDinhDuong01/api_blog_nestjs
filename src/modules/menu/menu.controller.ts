@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, Request, Version } from '@nestjs/common';
-import { CreateMenuAdapter, DeleteMenuAdapter, GetAllMenuAdapter, UpdateMenuAdapter } from './adapter';
+import { CreateMenuAdapter, DeleteMenuAdapter, GetAllMenuAdapter, GetMenuAdapter, UpdateMenuAdapter } from './adapter';
 import { MenuDTO } from 'src/dtos/menu.dto';
+import { BodyGeneralProps } from 'src/types/general.types';
 
 @Controller('api')
 export class MenuController {
@@ -9,7 +10,8 @@ export class MenuController {
         private readonly CreateMenuAdapter: CreateMenuAdapter,
         private readonly UpdateMenuAdapter: UpdateMenuAdapter,
         private readonly DeleteMenuAdapter: DeleteMenuAdapter,
-        private readonly GetAllMenuAdapter: GetAllMenuAdapter
+        private readonly GetAllMenuAdapter: GetAllMenuAdapter,
+        private readonly GetMenuAdapter:GetMenuAdapter
     ) { }
     @Post('menu')
     @Version('1')
@@ -31,9 +33,15 @@ export class MenuController {
 
     @Get('menu')
     @Version('1')
-    getAll(@Req() { body }) {
-        console.log("body", body)
+    getAll(@Req() { body }:{ body: BodyGeneralProps}) {
         return this.GetAllMenuAdapter.execute(body)
+    }
+
+
+    @Get('menu/:id')
+    @Version('1')
+    getDetail(@Param() {id}:{id: string }){
+        return this.GetMenuAdapter.execute(id)
     }
 
 }

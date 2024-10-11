@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import { IToken, MenuDTO } from "src/dtos/menu.dto";
+import { BodyGeneralProps } from "src/types/general.types";
 
 
 export abstract class CreateMenuAdapter {
@@ -16,7 +17,7 @@ export abstract class DeleteMenuAdapter {
 }
 
 export  abstract class GetAllMenuAdapter {
-    abstract  execute(input : any):Promise<any>
+    abstract  execute(input : BodyGeneralProps):Promise<any>
 }
 
 export abstract class GetMenuAdapter{
